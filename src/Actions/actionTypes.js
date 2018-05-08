@@ -1,0 +1,3 @@
+export const FETCH_ALL_USERS = 'FETCH_ALL_USERS';
+export const FETCH_USER_WITH_ID = 'FETCH_USER_WITH_ID';
+export const FETCH_USER_REPOS = 'FETCH_USER_REPOS';
