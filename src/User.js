@@ -20,7 +20,7 @@ class User extends Component {
             <a>{this.props.userName}</a>
           </div>
           <div class="col-sm-2 col-md-2 col-lg-2">
-            <button>Follow</button>
+            <button class="btn btn-default">Follow</button>
           </div>
         </div>
       </li>

@@ -79,7 +79,9 @@ class App extends Component {
           <ul class="list-group">
             {this.props.users.length > 0 && this._renderUsers()}
           </ul>
-          <button onClick={() => this._getNextUsers()}>Next</button>
+          <button class="btn btn-default" onClick={() => this._getNextUsers()}>
+            Next
+          </button>
         </div>
       </div>
     );
