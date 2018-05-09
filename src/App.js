@@ -7,15 +7,17 @@ import User from './User';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = { hideNext: false };
     this._onChangeHandle = this._onChangeHandle.bind(this);
   }
   _onChangeHandle(event) {
     const text = event.target.value;
-    if (text.length > 3)
-      setTimeout(() => {
-        this.props.searchUsers(text);
-      }, 500);
-    else this.props.fetchAllUsers(0);
+    if (text.length > 3) this.props.searchUsers(text);
+    if (!this.state.hideNext) this.setState({ hideNext: true });
+    else {
+      if (this.state.hideNext) this.setState({ hideNext: false });
+      this.props.fetchAllUsers(0);
+    }
   }
   _getNextUsers(ID) {
     this.props.fetchAllUsers(this.props.nextStartID);
@@ -122,9 +124,14 @@ class App extends Component {
               this.props.users.length > 0 &&
               this._renderUsers()}
           </ul>
-          <button class="btn btn-default" onClick={() => this._getNextUsers()}>
-            Next<span class="glyphicon glyphicon-menu-right" />
-          </button>
+          {!this.state.hideNext && (
+            <button
+              class="btn btn-default"
+              onClick={() => this._getNextUsers()}
+            >
+              Next<span class="glyphicon glyphicon-menu-right" />
+            </button>
+          )}
         </div>
       </div>
     );

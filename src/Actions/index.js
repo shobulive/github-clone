@@ -5,8 +5,8 @@ import {
   SEARCH_USERS
 } from './actionTypes.js';
 export function fetchAllUsers(nextStartID) {
-  return async (dispatch, getState) => {
-    await fetch(`https://api.github.com/users?since=${nextStartID}`)
+  return (dispatch, getState) => {
+    fetch(`https://api.github.com/users?since=${nextStartID}`)
       .then(res => {
         return res.json();
       })
@@ -20,7 +20,7 @@ export function fetchAllUsers(nextStartID) {
 }
 export function searchUsers(text) {
   return (dispatch, getState) => {
-    fetch(`https://api.github.com/search/users?q=${text}+in:login`)
+    fetch(`https://api.github.com/search/users?q=${text}in:login`)
       .then(res => {
         return res.json();
       })
@@ -33,7 +33,7 @@ export function searchUsers(text) {
   };
 }
 export function fetchUser(ID) {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch({
       type: FETCH_USER_WITH_ID,
       payload: { ID }
@@ -41,7 +41,7 @@ export function fetchUser(ID) {
   };
 }
 export function fetchUserRepos(ID) {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch({
       type: FETCH_USER_REPOS,
       payload: { ID }
