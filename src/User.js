@@ -3,26 +3,24 @@ class User extends Component {
   render() {
     return (
       <li
-        class="list-group-item"
+        class="w3-bar w3-display-container"
         style={{
           height: 80
         }}
       >
-        <div
-          style={{
-            flexDirection: 'row'
-          }}
-        >
-          <div class="col-sm-2 col-md-2 col-lg-2">
-            <img src={this.props.avatar} height="48" width="48" />
-          </div>
-          <div class="col-sm-8 col-md-8 col-lg-8">
-            <a>{this.props.userName}</a>
-          </div>
-          <div class="col-sm-2 col-md-2 col-lg-2">
-            <button class="btn btn-default">Follow</button>
-          </div>
+        <img
+          src={this.props.avatar}
+          class="w3-bar-item w3-circle"
+          style={{ width: 85 }}
+        />
+        <div class="w3-bar-item w3-display-center">
+          <span class="w3-large">{this.props.userName}</span>
+          <br />
+          <span>{this.props.userName}</span>
         </div>
+        <button class="btn btn-default  w3-display-right" style={{ right: 16 }}>
+          Follow
+        </button>
       </li>
     );
   }

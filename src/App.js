@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
+import logo from './Assets/user.png';
 import GitLogo from './Assets/git-logo.png';
 import './App.css';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import { fetchAllUsers } from './Actions';
 import User from './User';
 class App extends Component {
   _getNextUsers() {
-    this.props.fetchAllUsers(this.props.lastID);
+    this.props.fetchAllUsers(this.props.nextStartID);
   }
   componentWillMount() {
     this._getNextUsers();
@@ -20,11 +20,10 @@ class App extends Component {
     return users;
   }
   render() {
-    console.log(this.props.users);
     return (
       <div className="App">
         <nav class="navbar navbar-inverse" style={{ backgroundColor: '#333' }}>
-          <div class="container">
+          <div>
             <div class="navbar-header">
               <a class="navbar-brand" href="#">
                 <img
@@ -37,7 +36,7 @@ class App extends Component {
               </a>
             </div>
             <ul class="nav navbar-nav">
-              <li class="active">
+              <li>
                 <input
                   class="form-control"
                   style={{
@@ -61,26 +60,54 @@ class App extends Component {
               <li>
                 <a style={{ fontWeight: 'bold' }}>Explore</a>
               </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
               <li>
-                <a style={{ fontWeight: 'bold' }}>+</a>
+                <a href="#">
+                  <span class="glyphicon glyphicon-plus" />{' '}
+                  <span class="glyphicon glyphicon-menu-down" />
+                </a>
               </li>
               <li>
-                <a style={{ fontWeight: 'bold' }}>Explore</a>
+                <a href="#">
+                  <span class="glyphicon glyphicon-user" />
+                  <span class="glyphicon glyphicon-menu-down" />
+                </a>
               </li>
             </ul>
           </div>
         </nav>
-        <div class="container">
-          <input
-            class="form-control"
-            placeholder={'Find a member...'}
-            style={{ backgroundColor: '#eeeeef' }}
-          />
-          <ul class="list-group">
+        <div style={{ padding: 16 }}>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-search" />
+            </span>
+            <input
+              class="form-control"
+              placeholder={'Find a member...'}
+              style={{
+                backgroundColor: '#eeeeef',
+                width: 300
+              }}
+            />
+          </div>
+          <ul
+            class="w3-ul"
+            style={{
+              marginBottom: 16,
+              marginTop: 16,
+              borderTopWidth: 0.5,
+              borderTopStyle: 'solid',
+              borderTopColor: '#ccc',
+              borderBottomWidth: 0.5,
+              borderBottomStyle: 'solid',
+              borderBottomColor: '#ccc'
+            }}
+          >
             {this.props.users.length > 0 && this._renderUsers()}
           </ul>
           <button class="btn btn-default" onClick={() => this._getNextUsers()}>
-            Next
+            Next<span class="glyphicon glyphicon-menu-right" />
           </button>
         </div>
       </div>
@@ -93,10 +120,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 const mapStateToProps = state => {
-  console.log(state);
+  console.log(state, 'state');
   return {
     users: state.fetchAllUsers.users,
-    lastID: state.fetchAllUsers.lastUserID
+    nextStartID: state.fetchAllUsers.nextStartID
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -3,11 +3,10 @@ import {
   FETCH_USER_REPOS,
   FETCH_USER_WITH_ID
 } from './actionTypes.js';
-export function fetchAllUsers(lastID) {
+export function fetchAllUsers(nextStartID) {
   return async (dispatch, getState) => {
-    await fetch(`https://api.github.com/users?since=${lastID}`)
+    await fetch(`https://api.github.com/users?since=${nextStartID}`)
       .then(res => {
-        // console.log(res, 'repsonse');
         return res.json();
       })
       .then(data => {
