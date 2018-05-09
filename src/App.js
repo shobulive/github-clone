@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
-import logo from './Assets/user.png';
 import GitLogo from './Assets/git-logo.png';
 import './App.css';
 import { connect } from 'react-redux';
-import { fetchAllUsers } from './Actions';
+import { fetchAllUsers, searchUsers } from './Actions';
 import User from './User';
 class App extends Component {
-  _getNextUsers() {
+  constructor(props) {
+    super(props);
+    this._onChangeHandle = this._onChangeHandle.bind(this);
+  }
+  _onChangeHandle(event) {
+    const text = event.target.value;
+    if (text.length > 3)
+      setTimeout(() => {
+        this.props.searchUsers(text);
+      }, 500);
+    else this.props.fetchAllUsers(0);
+  }
+  _getNextUsers(ID) {
     this.props.fetchAllUsers(this.props.nextStartID);
   }
   componentWillMount() {
@@ -15,7 +26,9 @@ class App extends Component {
   _renderUsers() {
     let users = [];
     this.props.users.forEach((user, index) => {
-      users.push(<User avatar={user.avatar_url} userName={user.login} />);
+      users.push(
+        <User key={index} avatar={user.avatar_url} userName={user.login} />
+      );
     });
     return users;
   }
@@ -89,6 +102,7 @@ class App extends Component {
                 backgroundColor: '#eeeeef',
                 width: 300
               }}
+              onChange={this._onChangeHandle}
             />
           </div>
           <ul
@@ -104,7 +118,9 @@ class App extends Component {
               borderBottomColor: '#ccc'
             }}
           >
-            {this.props.users.length > 0 && this._renderUsers()}
+            {this.props.users &&
+              this.props.users.length > 0 &&
+              this._renderUsers()}
           </ul>
           <button class="btn btn-default" onClick={() => this._getNextUsers()}>
             Next<span class="glyphicon glyphicon-menu-right" />
@@ -116,7 +132,8 @@ class App extends Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAllUsers: lastID => dispatch(fetchAllUsers(lastID))
+    fetchAllUsers: lastID => dispatch(fetchAllUsers(lastID)),
+    searchUsers: text => dispatch(searchUsers(text))
   };
 };
 const mapStateToProps = state => {
